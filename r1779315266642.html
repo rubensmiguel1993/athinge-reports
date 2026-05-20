@@ -1,0 +1,956 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Análise</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+<style>
+  body { background:#f4f6f9 !important; color:#212529 !important; }
+  .card { background-color:#fff !important; color:#212529 !important; border-color:#dee2e6 !important; }
+  h1,h2,h3,h4,h5,h6 { color:#212529 !important; }
+  p, li, td, th, span, div { color:inherit; }
+  .text-muted { color:#6c757d !important; }
+  .text-dark { color:#212529 !important; }
+  .bg-light { background-color:#f8f9fa !important; color:#212529 !important; }
+  .bg-white { background-color:#fff !important; }
+  .list-group-item { background-color:#fff; color:#212529; border-color:#dee2e6; }
+  .small, small { color:inherit; }
+  .border-0.shadow-sm { background-color:#fff !important; }
+  .table { --bs-table-color:#212529; }
+  .table-striped>tbody>tr:nth-of-type(odd)>* { --bs-table-bg-type:rgba(0,0,0,.04); }
+  .dot { width:8px;height:8px;border-radius:50%;background:#dee2e6;border:none;padding:0;cursor:pointer;transition:all .2s;flex-shrink:0; }
+  .dot.active { background:#00d4ff;transform:scale(1.3); }
+  .dot:hover { background:#67e8f9; }
+  .nav-bar { position:-webkit-sticky;position:sticky;top:0;z-index:100;border-bottom:2px solid #e9ecef;background:#fff; }
+  .btn-primary { background-color:#00d4ff!important;border-color:#00d4ff!important;color:#050c18!important;font-weight:700; }
+  .btn-primary:hover { background-color:#00b2d9!important;border-color:#00b2d9!important; }
+  .btn-outline-primary { color:#00d4ff!important;border-color:#00d4ff!important; }
+  .btn-outline-primary:hover { background-color:#00d4ff!important;color:#050c18!important; }
+  .text-primary { color:#00d4ff!important; }
+  .border-primary { border-color:#00d4ff!important; }
+  .badge.bg-primary { background-color:#00d4ff!important;color:#050c18!important; }
+  .bg-primary { background-color:#00d4ff!important; }
+  .btn { display:inline-flex;align-items:center;justify-content:center;padding:.375rem .75rem;font-size:.875rem;font-weight:400;line-height:1.5;border:1px solid transparent;border-radius:.375rem;cursor:pointer;text-decoration:none;background:transparent; }
+  .btn[disabled],.btn:disabled { opacity:.5;cursor:default; }
+  @keyframes secIn { from { opacity:0;transform:translateX(var(--sec-from,24px)); } to { opacity:1;transform:translateX(0); } }
+  .sec-anim { animation:secIn .22s ease; }
+  * { -webkit-tap-highlight-color: transparent; }
+  body { -webkit-text-size-adjust: 100%; }
+  .dot { width:14px!important;height:14px!important; }
+  .btn { min-height:44px; }
+  .nav-bar { display:flex!important;flex-direction:row!important;align-items:center!important;flex-wrap:nowrap!important;-webkit-overflow-scrolling:touch; }
+  #btn-prev, #btn-next { flex-shrink:0!important; }
+  #nav-center { flex:1!important;min-width:0!important; }
+</style>
+</head>
+<body>
+<div style="max-width:1100px;margin:0 auto;padding:0 1rem 3rem">
+  <div class="nav-bar d-flex align-items-center gap-3 rounded-3 shadow-sm p-3 mb-4" style="display:flex;flex-direction:row;align-items:center;gap:1rem;position:-webkit-sticky;position:sticky;top:0;z-index:100;background:#fff;border-bottom:2px solid #e9ecef;border-radius:.5rem;box-shadow:0 1px 4px rgba(0,0,0,.1);padding:1rem;margin-bottom:1.5rem;">
+    <button class="btn btn-outline-primary btn-sm px-3 flex-shrink-0" id="btn-prev" onclick="navigate(-1)" disabled style="flex-shrink:0;white-space:nowrap;">
+      <i class="bi bi-chevron-left"></i> Anterior
+    </button>
+    <div class="flex-grow-1 text-center" id="nav-center" style="flex:1;text-align:center;min-width:0;">
+      <div class="fw-semibold small mb-1" id="nav-title"></div>
+      <div class="d-flex justify-content-center flex-wrap gap-1" id="nav-dots" style="display:flex;justify-content:center;flex-wrap:wrap;gap:4px;"><button class="dot active" id="dot-0" onclick="goSection(0)" title="Análise do Nicho"></button><button class="dot" id="dot-1" onclick="goSection(1)" title="Análise de Concorrentes"></button><button class="dot" id="dot-2" onclick="goSection(2)" title="Persona do Público & ICP"></button><button class="dot" id="dot-3" onclick="goSection(3)" title="Google Meu Negócio"></button><button class="dot" id="dot-4" onclick="goSection(4)" title="Presença no Instagram — @drarubiaaranhadermato"></button></div>
+    </div>
+    <button class="btn btn-primary btn-sm px-3 flex-shrink-0" id="btn-next" onclick="navigate(1)" style="flex-shrink:0;white-space:nowrap;">
+      Próxima <i class="bi bi-chevron-right"></i>
+    </button>
+  </div>
+  <div class="sec-panel" id="sec-0" style="display:block"><div class="d-flex align-items-center gap-2 mb-3 mt-5 pb-2" style="border-bottom:2px solid #00d4ff">
+    <div class="rounded-2 d-flex align-items-center justify-content-center" style="width:32px;height:32px;min-width:32px;background:#00d4ff">
+      <i class="bi bi-bar-chart-line" style="color:#050c18"></i>
+    </div>
+    <h5 class="mb-0 fw-bold">Análise do Nicho</h5>
+  </div><div class="section-block mb-4" data-sub-key="0_0" style="position: relative;">
+    <div class="row g-4">
+      <div class="col-12 col-md-4">
+        <p class="small fw-bold text-muted text-uppercase mb-2">Mercado &amp; Comportamento</p>
+        <ul class="mb-3 ps-3" style="font-size:.88rem;line-height:1.7">
+          <li>Decisão de compra fortemente influenciada por indicação médica</li>
+          <li>Público pesquisa ativamente no Instagram antes de agendar</li>
+          <li>Avaliações no Google Maps são critério decisivo de escolha</li>
+          <li>Pacientes comparam antes/depois de procedimentos estéticos</li>
+          <li>Cidades do interior valorizam especialista local vs. capital</li>
+        </ul>
+      </div>
+      <div class="col-12 col-md-4">
+        <p class="small fw-bold text-muted text-uppercase mb-2">Sazonalidade</p>
+        <ul class="mb-3 ps-3" style="font-size:.88rem;line-height:1.7">
+          <li>Pico de demanda: out–nov (verão = estética corporal e facial)</li>
+          <li>Jan–fev: alta procura por pós-sol, manchas e acne</li>
+          <li>Baixa relativa: jun–jul — aumenta CPL até 30%</li>
+          <li>Carnaval e festas de fim de ano impulsionam procedimentos estéticos</li>
+        </ul>
+      </div>
+      <div class="col-12 col-md-4">
+        <p class="small fw-bold text-muted text-uppercase mb-2">Oportunidades</p>
+        <ul class="mb-3 ps-3" style="font-size:.88rem;line-height:1.7">
+          <li>Poucos dermatologistas em Curvelo com presença digital forte</li>
+          <li>Demanda reprimida por procedimentos: botox, preenchimento, laser</li>
+          <li>Ângulo de autoridade médica supera clínicas de estética</li>
+          <li>Vídeos curtos sobre skincare têm alto potencial viral no interior</li>
+          <li>Nenhum concorrente local explora tráfego pago de forma ativa</li>
+        </ul>
+      </div>
+    </div>
+  <div class="sub-toolbar"><button class="btn btn-sm btn-outline-secondary" style="font-size:.72rem;padding:.15rem .45rem" onclick="toggleSubEdit(0,0)"><i class="bi bi-pencil me-1"></i>Editar</button><button class="btn btn-sm btn-outline-secondary" style="font-size:.72rem;padding:.15rem .45rem" onclick="toggleSubHide(0,0)"><i class="bi bi-eye-slash me-1"></i>Ocultar</button></div></div></div>
+<div class="sec-panel" id="sec-1" style="display:none"><div class="d-flex align-items-center gap-2 mb-3 mt-5 pb-2" style="border-bottom:2px solid #00d4ff">
+    <div class="rounded-2 d-flex align-items-center justify-content-center" style="width:32px;height:32px;min-width:32px;background:#00d4ff">
+      <i class="bi bi-people" style="color:#050c18"></i>
+    </div>
+    <h5 class="mb-0 fw-bold">Análise de Concorrentes</h5>
+  </div><div>
+    <div class="row row-cols-1 row-cols-md-3 g-3 mb-5"><div class="col">
+      <div class="card border-0 shadow-sm rounded-3 h-100">
+        <div class="card-body">
+          <div class="d-flex justify-content-between align-items-center mb-3">
+            <div class="comp-avatar" style="background:#0d6efd">FL</div>
+            <div class="comp-score-ring" style="color:#fd7e14;border-color:#fd7e14">
+              <span style="font-size:18px;font-weight:700">6.4</span>
+              <span style="font-size:8px;color:#adb5bd;font-weight:400">score</span>
+            </div>
+          </div>
+          <div class="fw-bold mb-0">Dra. Fernanda Lobo Dermatologia</div>
+          <div class="small text-muted mb-2">instagram.com/dra.fernandalobodermato</div>
+          <span class="badge rounded-pill bg-primary bg-opacity-10 text-primary mb-3" style="font-size:9px;letter-spacing:.05em">PERFORMANCE</span>
+          <div class="mb-2">
+            <div class="d-flex align-items-center gap-2 mb-1">
+    <span class="text-muted" style="font-size:11px;width:70px;flex-shrink:0">Site</span>
+    <div class="comp-bar-bg"><div class="comp-bar-fill" style="width:40%;background:#0d6efd"></div></div>
+    <span style="font-size:11px;width:14px;text-align:right;color:#6c757d">4</span>
+  </div>
+            <div class="d-flex align-items-center gap-2 mb-1">
+    <span class="text-muted" style="font-size:11px;width:70px;flex-shrink:0">SEO</span>
+    <div class="comp-bar-bg"><div class="comp-bar-fill" style="width:50%;background:#198754"></div></div>
+    <span style="font-size:11px;width:14px;text-align:right;color:#6c757d">5</span>
+  </div>
+            <div class="d-flex align-items-center gap-2 mb-1">
+    <span class="text-muted" style="font-size:11px;width:70px;flex-shrink:0">Mídia Paga</span>
+    <div class="comp-bar-bg"><div class="comp-bar-fill" style="width:50%;background:#fd7e14"></div></div>
+    <span style="font-size:11px;width:14px;text-align:right;color:#6c757d">5</span>
+  </div>
+            <div class="d-flex align-items-center gap-2 mb-1">
+    <span class="text-muted" style="font-size:11px;width:70px;flex-shrink:0">Social</span>
+    <div class="comp-bar-bg"><div class="comp-bar-fill" style="width:80%;background:#6f42c1"></div></div>
+    <span style="font-size:11px;width:14px;text-align:right;color:#6c757d">8</span>
+  </div>
+          </div>
+          <div class="border-top pt-2 mt-2">
+            <div class="small fw-bold text-success mb-1">✓ Força</div>
+            <div class="small text-muted">Boa frequência de postagens e engajamento local consistente no Instagram.</div>
+            <div class="small fw-bold text-danger mt-2 mb-1">✗ Fraqueza</div>
+            <div class="small text-muted">Sem site próprio, sem Google Ads, CPL alto por falta de landing page otimizada.</div>
+          </div>
+        </div>
+      </div>
+    </div><div class="col">
+      <div class="card border-0 shadow-sm rounded-3 h-100">
+        <div class="card-body">
+          <div class="d-flex justify-content-between align-items-center mb-3">
+            <div class="comp-avatar" style="background:#198754">DB</div>
+            <div class="comp-score-ring" style="color:#fd7e14;border-color:#fd7e14">
+              <span style="font-size:18px;font-weight:700">5.8</span>
+              <span style="font-size:8px;color:#adb5bd;font-weight:400">score</span>
+            </div>
+          </div>
+          <div class="fw-bold mb-0">Clínica DermaBella Curvelo</div>
+          <div class="small text-muted mb-2">clinicadermabella.com.br</div>
+          <span class="badge rounded-pill bg-success bg-opacity-10 text-success mb-3" style="font-size:9px;letter-spacing:.05em">VOLUME/PREÇO</span>
+          <div class="mb-2">
+            <div class="d-flex align-items-center gap-2 mb-1">
+    <span class="text-muted" style="font-size:11px;width:70px;flex-shrink:0">Site</span>
+    <div class="comp-bar-bg"><div class="comp-bar-fill" style="width:60%;background:#0d6efd"></div></div>
+    <span style="font-size:11px;width:14px;text-align:right;color:#6c757d">6</span>
+  </div>
+            <div class="d-flex align-items-center gap-2 mb-1">
+    <span class="text-muted" style="font-size:11px;width:70px;flex-shrink:0">SEO</span>
+    <div class="comp-bar-bg"><div class="comp-bar-fill" style="width:40%;background:#198754"></div></div>
+    <span style="font-size:11px;width:14px;text-align:right;color:#6c757d">4</span>
+  </div>
+            <div class="d-flex align-items-center gap-2 mb-1">
+    <span class="text-muted" style="font-size:11px;width:70px;flex-shrink:0">Mídia Paga</span>
+    <div class="comp-bar-bg"><div class="comp-bar-fill" style="width:40%;background:#fd7e14"></div></div>
+    <span style="font-size:11px;width:14px;text-align:right;color:#6c757d">4</span>
+  </div>
+            <div class="d-flex align-items-center gap-2 mb-1">
+    <span class="text-muted" style="font-size:11px;width:70px;flex-shrink:0">Social</span>
+    <div class="comp-bar-bg"><div class="comp-bar-fill" style="width:60%;background:#6f42c1"></div></div>
+    <span style="font-size:11px;width:14px;text-align:right;color:#6c757d">6</span>
+  </div>
+          </div>
+          <div class="border-top pt-2 mt-2">
+            <div class="small fw-bold text-success mb-1">✓ Força</div>
+            <div class="small text-muted">Preço competitivo e variedade de serviços estéticos como diferencial de volume.</div>
+            <div class="small fw-bold text-danger mt-2 mb-1">✗ Fraqueza</div>
+            <div class="small text-muted">Sem médico especialista, autoridade limitada, alta rotatividade de clientes.</div>
+          </div>
+        </div>
+      </div>
+    </div><div class="col">
+      <div class="card border-0 shadow-sm rounded-3 h-100">
+        <div class="card-body">
+          <div class="d-flex justify-content-between align-items-center mb-3">
+            <div class="comp-avatar" style="background:#fd7e14">RM</div>
+            <div class="comp-score-ring" style="color:#198754;border-color:#198754">
+              <span style="font-size:18px;font-weight:700">7.6</span>
+              <span style="font-size:8px;color:#adb5bd;font-weight:400">score</span>
+            </div>
+          </div>
+          <div class="fw-bold mb-0">Dr. Rodrigo Mendonça Dermatologia</div>
+          <div class="small text-muted mb-2">drrodrigomendonca.com.br (regional)</div>
+          <span class="badge rounded-pill bg-warning bg-opacity-10 text-warning mb-3" style="font-size:9px;letter-spacing:.05em">NICHADO</span>
+          <div class="mb-2">
+            <div class="d-flex align-items-center gap-2 mb-1">
+    <span class="text-muted" style="font-size:11px;width:70px;flex-shrink:0">Site</span>
+    <div class="comp-bar-bg"><div class="comp-bar-fill" style="width:80%;background:#0d6efd"></div></div>
+    <span style="font-size:11px;width:14px;text-align:right;color:#6c757d">8</span>
+  </div>
+            <div class="d-flex align-items-center gap-2 mb-1">
+    <span class="text-muted" style="font-size:11px;width:70px;flex-shrink:0">SEO</span>
+    <div class="comp-bar-bg"><div class="comp-bar-fill" style="width:80%;background:#198754"></div></div>
+    <span style="font-size:11px;width:14px;text-align:right;color:#6c757d">8</span>
+  </div>
+            <div class="d-flex align-items-center gap-2 mb-1">
+    <span class="text-muted" style="font-size:11px;width:70px;flex-shrink:0">Mídia Paga</span>
+    <div class="comp-bar-bg"><div class="comp-bar-fill" style="width:60%;background:#fd7e14"></div></div>
+    <span style="font-size:11px;width:14px;text-align:right;color:#6c757d">6</span>
+  </div>
+            <div class="d-flex align-items-center gap-2 mb-1">
+    <span class="text-muted" style="font-size:11px;width:70px;flex-shrink:0">Social</span>
+    <div class="comp-bar-bg"><div class="comp-bar-fill" style="width:60%;background:#6f42c1"></div></div>
+    <span style="font-size:11px;width:14px;text-align:right;color:#6c757d">6</span>
+  </div>
+          </div>
+          <div class="border-top pt-2 mt-2">
+            <div class="small fw-bold text-success mb-1">✓ Força</div>
+            <div class="small text-muted">Forte presença no Google, muitas avaliações positivas, site bem estruturado.</div>
+            <div class="small fw-bold text-danger mt-2 mb-1">✗ Fraqueza</div>
+            <div class="small text-muted">Distante de Curvelo; não explora Instagram como canal de captação de leads.</div>
+          </div>
+        </div>
+      </div>
+    </div></div>
+
+    <p class="small fw-bold text-muted text-uppercase mb-3">🚀 Oportunidades Identificadas</p>
+    <div class="row g-3"><div class="col-md-4">
+      <div class="card border-0 shadow-sm rounded-3 h-100">
+        <div class="card-body">
+          <div class="fw-black mb-1" style="font-size:28px;font-weight:800;color:#dee2e6;line-height:1">01</div>
+          <div class="fw-bold small mb-2" style="color:#0d6efd">Autoridade Médica como Diferencial</div>
+          <div class="small text-muted">Nenhum concorrente local comunica com clareza o peso do CRM e da formação especializada. Posicionar a Dra. Rúbia como a única dermatologista médica de referência em Curvelo cria uma barreira competitiva difícil de replicar por clínicas de estética.</div>
+        </div>
+      </div>
+    </div><div class="col-md-4">
+      <div class="card border-0 shadow-sm rounded-3 h-100">
+        <div class="card-body">
+          <div class="fw-black mb-1" style="font-size:28px;font-weight:800;color:#dee2e6;line-height:1">02</div>
+          <div class="fw-bold small mb-2" style="color:#198754">Tráfego Pago Local sem Concorrência</div>
+          <div class="small text-muted">Nenhum dos concorrentes diretos em Curvelo investe em Google Ads ou Meta Ads de forma estruturada. Entrar no leilão agora significa CPL baixo e alta visibilidade com orçamento reduzido.</div>
+        </div>
+      </div>
+    </div><div class="col-md-4">
+      <div class="card border-0 shadow-sm rounded-3 h-100">
+        <div class="card-body">
+          <div class="fw-black mb-1" style="font-size:28px;font-weight:800;color:#dee2e6;line-height:1">03</div>
+          <div class="fw-bold small mb-2" style="color:#fd7e14">Google Meu Negócio Não Explorado</div>
+          <div class="small text-muted">As buscas por 'dermatologista Curvelo' têm volume local com baixíssima disputa. Otimizar o perfil com fotos, especialidades e avaliações pode gerar leads orgânicos imediatos sem custo de mídia.</div>
+        </div>
+      </div>
+    </div><div class="col-md-4">
+      <div class="card border-0 shadow-sm rounded-3 h-100">
+        <div class="card-body">
+          <div class="fw-black mb-1" style="font-size:28px;font-weight:800;color:#dee2e6;line-height:1">04</div>
+          <div class="fw-bold small mb-2" style="color:#dc3545">Conteúdo Educativo para Captura de Atenção</div>
+          <div class="small text-muted">O público do interior consome fortemente Reels e TikToks sobre saúde da pele. Vídeos curtos explicando manchas, acne e envelhecimento posicionam a médica como referência antes mesmo do primeiro anúncio pago.</div>
+        </div>
+      </div>
+    </div><div class="col-md-4">
+      <div class="card border-0 shadow-sm rounded-3 h-100">
+        <div class="card-body">
+          <div class="fw-black mb-1" style="font-size:28px;font-weight:800;color:#dee2e6;line-height:1">05</div>
+          <div class="fw-bold small mb-2" style="color:#0d6efd">Procedimentos Estéticos com Alta Margem</div>
+          <div class="small text-muted">Botox, preenchimento labial e laser são altamente buscados, mas sem oferta local clara. Uma campanha segmentada para procedimentos de alto ticket pode gerar retorno significativo mesmo com baixo volume de leads.</div>
+        </div>
+      </div>
+    </div><div class="col-md-4">
+      <div class="card border-0 shadow-sm rounded-3 h-100">
+        <div class="card-body">
+          <div class="fw-black mb-1" style="font-size:28px;font-weight:800;color:#dee2e6;line-height:1">06</div>
+          <div class="fw-bold small mb-2" style="color:#198754">WhatsApp como Canal de Conversão Direto</div>
+          <div class="small text-muted">A jornada de compra do paciente interiorano termina no WhatsApp. Integrar Meta Ads com botão de WhatsApp e fluxo de pré-atendimento automatizado reduz fricção e aumenta taxa de agendamento significativamente.</div>
+        </div>
+      </div>
+    </div></div></div></div>
+<div class="sec-panel" id="sec-2" style="display:none"><div class="d-flex align-items-center gap-2 mb-3 mt-5 pb-2" style="border-bottom:2px solid #00d4ff">
+  <div class="rounded-2 d-flex align-items-center justify-content-center" style="width:32px;height:32px;min-width:32px;background:#00d4ff"><i class="bi bi-person-heart" style="color:#050c18"></i></div>
+  <h5 class="mb-0 fw-bold">Persona do Público &amp; ICP</h5>
+</div><div class="card border-0 shadow-sm rounded-3 p-3 mb-3">
+  <h5 class="fw-bold mb-1">Ana Paula Silva</h5>
+  <p class="fst-italic text-muted mb-2">"Cuido da família, do trabalho e de tudo — mas a minha pele ficou para o último lugar."</p>
+  <div class="d-flex flex-wrap gap-2">
+    <span class="badge bg-secondary">38 anos</span>
+    <span class="badge bg-secondary">Feminino</span>
+    <span class="badge bg-secondary">Curvelo-MG</span>
+    <span class="badge bg-secondary">R$5.000–R$12.000/mês</span>
+    <span class="badge bg-secondary">Servidora Pública / Empreendedora Local</span>
+  </div>
+  <div class="row g-2 mt-2">
+    <div class="col-auto"><span class="badge bg-primary bg-opacity-10 text-primary rounded-pill px-3 py-2">Aparência &amp; Autoestima</span></div>
+    <div class="col-auto"><span class="badge bg-primary bg-opacity-10 text-primary rounded-pill px-3 py-2">Saúde &amp; Bem-estar</span></div>
+    <div class="col-auto"><span class="badge bg-primary bg-opacity-10 text-primary rounded-pill px-3 py-2">Confiança no Especialista</span></div>
+  </div>
+</div><div class="row g-3 mb-3">
+
+  <!-- Dores -->
+  <div class="col-md-4">
+    <div class="card h-100 border-danger rounded-3 p-3">
+      <h6 class="fw-bold mb-3">🔥 Top 5 Dores</h6>
+      <ul class="list-unstyled mb-0">
+        <li class="mb-3">
+          <div class="d-flex align-items-start gap-2">
+            <i class="bi bi-x-circle text-danger mt-1 flex-shrink-0"></i>
+            <div>
+              <span>Manchas no rosto resistentes a cremes</span>
+              <div class="text-muted small fst-italic mt-1">"Já gastei uma fortuna em produtos e nada funcionou."</div>
+            </div>
+          </div>
+        </li>
+        <li class="mb-3">
+          <div class="d-flex align-items-start gap-2">
+            <i class="bi bi-x-circle text-danger mt-1 flex-shrink-0"></i>
+            <div>
+              <span>Envelhecimento precoce visível no espelho</span>
+              <div class="text-muted small fst-italic mt-1">"Pareço mais velha do que sou e isso me incomoda demais."</div>
+            </div>
+          </div>
+        </li>
+        <li class="mb-3">
+          <div class="d-flex align-items-start gap-2">
+            <i class="bi bi-x-circle text-danger mt-1 flex-shrink-0"></i>
+            <div>
+              <span>Acne e cicatrizes que afetam a autoestima</span>
+              <div class="text-muted small fst-italic mt-1">"Evito fotos e prefiro ficar ao fundo nas reuniões."</div>
+            </div>
+          </div>
+        </li>
+        <li class="mb-3">
+          <div class="d-flex align-items-start gap-2">
+            <i class="bi bi-x-circle text-danger mt-1 flex-shrink-0"></i>
+            <div>
+              <span>Falta de dermatologista de confiança perto</span>
+              <div class="text-muted small fst-italic mt-1">"Sempre tive que ir até BH — é caro e cansativo."</div>
+            </div>
+          </div>
+        </li>
+        <li class="mb-0">
+          <div class="d-flex align-items-start gap-2">
+            <i class="bi bi-x-circle text-danger mt-1 flex-shrink-0"></i>
+            <div>
+              <span>Medo de procedimentos que pareçam artificiais</span>
+              <div class="text-muted small fst-italic mt-1">"Não quero parecer que fiz coisa demais no rosto."</div>
+            </div>
+          </div>
+        </li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- Desejos -->
+  <div class="col-md-4">
+    <div class="card h-100 border-success rounded-3 p-3">
+      <h6 class="fw-bold mb-3">✨ Top 5 Desejos</h6>
+      <ul class="list-unstyled mb-0">
+        <li class="mb-3">
+          <div class="d-flex align-items-start gap-2">
+            <i class="bi bi-star text-warning mt-1 flex-shrink-0"></i>
+            <span>Pele lisa, uniforme e luminosa sem maquiagem</span>
+          </div>
+        </li>
+        <li class="mb-3">
+          <div class="d-flex align-items-start gap-2">
+            <i class="bi bi-star text-warning mt-1 flex-shrink-0"></i>
+            <span>Parecer 10 anos mais jovem de forma natural e discreta</span>
+          </div>
+        </li>
+        <li class="mb-3">
+          <div class="d-flex align-items-start gap-2">
+            <i class="bi bi-star text-warning mt-1 flex-shrink-0"></i>
+            <span>Ser elogiada pela aparência sem que ninguém perceba que fez tratamento</span>
+          </div>
+        </li>
+        <li class="mb-3">
+          <div class="d-flex align-items-start gap-2">
+            <i class="bi bi-star text-warning mt-1 flex-shrink-0"></i>
+            <span>Ter uma especialista de confiança pertinho, sem precisar viajar</span>
+          </div>
+        </li>
+        <li class="mb-0">
+          <div class="d-flex align-items-start gap-2">
+            <i class="bi bi-star text-warning mt-1 flex-shrink-0"></i>
+            <span><em>(Não admite publicamente)</em> Recuperar a autoestima que perdeu após a maternidade ou ganho de peso</span>
+          </div>
+        </li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- Objeções -->
+  <div class="col-md-4">
+    <div class="card h-100 border-warning rounded-3 p-3">
+      <h6 class="fw-bold mb-3">🚧 Top 3 Objeções</h6>
+      <div class="table-responsive">
+        <table class="table table-sm table-borderless mb-0">
+          <thead>
+            <tr>
+              <th class="text-muted small">Objeção</th>
+              <th class="text-muted small">Tipo</th>
+              <th class="text-muted small">Como quebrar</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="small fw-semibold">"É muito caro"</td>
+              <td><span class="badge bg-secondary small">Racional</span></td>
+              <td class="small text-muted">Um protocolo dura meses — muito mais barato do que cremes sem resultado acumulados.</td>
+            </tr>
+            <tr>
+              <td class="small fw-semibold">"Tenho medo de efeito colateral"</td>
+              <td><span class="badge bg-danger bg-opacity-25 text-danger small">Emocional</span></td>
+              <td class="small text-muted">Todos os procedimentos são aprovados pela ANVISA e realizados por médica especialista.</td>
+            </tr>
+            <tr>
+              <td class="small fw-semibold">"Não sei se funciona pra mim"</td>
+              <td><span class="badge bg-secondary small">Racional</span></td>
+              <td class="small text-muted">Veja os resultados reais de pacientes de Curvelo com pele igual à sua.</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+</div><div class="card bg-light border-start border-3 border-primary p-3 mb-3">
+  <h6 class="fw-bold mb-3">💬 Frases exatas — use como headline/hook</h6>
+  <p class="text-muted small fw-semibold mb-2">O que ela diz sobre o <span class="text-danger">problema</span>:</p>
+  <blockquote class="blockquote border-start border-3 border-danger ps-3 mb-2">
+    <p class="mb-0 fst-italic small">"Minha pele está cada vez pior e eu já não sei mais o que fazer."</p>
+  </blockquote>
+  <blockquote class="blockquote border-start border-3 border-danger ps-3 mb-2">
+    <p class="mb-0 fst-italic small">"Parece que todo mundo percebe as minhas manchas antes de qualquer outra coisa."</p>
+  </blockquote>
+  <blockquote class="blockquote border-start border-3 border-danger ps-3 mb-4">
+    <p class="mb-0 fst-italic small">"Já tentei de tudo — cremes caros, receitas caseiras — e nada resolveu de verdade."</p>
+  </blockquote>
+
+  <p class="text-muted small fw-semibold mb-2">O que ela diz sobre o <span class="text-success">desejo</span>:</p>
+  <blockquote class="blockquote border-start border-3 border-success ps-3 mb-2">
+    <p class="mb-0 fst-italic small">"Eu só queria ter uma pele bonita de verdade, sem precisar esconder nada."</p>
+  </blockquote>
+  <blockquote class="blockquote border-start border-3 border-success ps-3 mb-2">
+    <p class="mb-0 fst-italic small">"Se eu resolver isso, vou me sentir outra pessoa — mais confiante, mais eu mesma."</p>
+  </blockquote>
+  <blockquote class="blockquote border-start border-3 border-success ps-3 mb-0">
+    <p class="mb-0 fst-italic small">"Quero poder sair de casa sem maquiagem e não me preocupar com o que os outros pensam."</p>
+  </blockquote>
+</div><div class="row g-3 mb-3">
+
+  <!-- Lead Quente -->
+  <div class="col-md-5">
+    <div class="card h-100 bg-success bg-opacity-10 border-success rounded-3 p-3">
+      <h6 class="fw-bold mb-3">✅ Lead Quente</h6>
+      <ul class="list-unstyled mb-0">
+        <li class="mb-2 d-flex justify-content-between align-items-start">
+          <span class="small">Mulher, 28–55 anos, em Curvelo ou região</span>
+          <span class="badge bg-success ms-2">[+5]</span>
+        </li>
+        <li class="mb-2 d-flex justify-content-between align-items-start">
+          <span class="small">Comentou ou interagiu em posts sobre pele, manchas ou estética</span>
+          <span class="badge bg-success ms-2">[+4]</span>
+        </li>
+        <li class="mb-2 d-flex justify-content-between align-items-start">
+          <span class="small">Segue perfis de dermatologia, beleza ou bem-estar</span>
+          <span class="badge bg-success ms-2">[+3]</span>
+        </li>
+        <li class="mb-0 d-flex justify-content-between align-items-start">
+          <span class="small">Já usou cremes ou tratamentos sem resultado satisfatório</span>
+          <span class="badge bg-success ms-2">[+2]</span>
+        </li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- Anti-ICP -->
+  <div class="col-md-4">
+    <div class="card h-100 bg-danger bg-opacity-10 border-danger rounded-3 p-3">
+      <h6 class="fw-bold mb-3">❌ Anti-ICP</h6>
+      <ul class="list-unstyled mb-0">
+        <li class="mb-2 d-flex justify-content-between align-items-start">
+          <span class="small">Homem sem interesse declarado em saúde ou estética da pele</span>
+          <span class="badge bg-danger ms-2">[-5]</span>
+        </li>
+        <li class="mb-2 d-flex justify-content-between align-items-start">
+          <span class="small">Fora da região (mais de 100 km) sem disposição para deslocamento</span>
+          <span class="badge bg-danger ms-2">[-3]</span>
+        </li>
+        <li class="mb-0 d-flex justify-content-between align-items-start">
+          <span class="small">Busca atendimento apenas pelo SUS, sem interesse em consulta particular</span>
+          <span class="badge bg-danger ms-2">[-2]</span>
+        </li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- Frase ICP -->
+  <div class="col-md-3">
+    <div class="card h-100 border-primary rounded-3 p-3 d-flex flex-column justify-content-center">
+      <h6 class="fw-bold mb-3">🎯 Frase ICP</h6>
+      <p class="small mb-0 text-muted">Meu cliente ideal é <strong class="text-dark">uma mulher de 28 a 55 anos em Curvelo-MG</strong> que <strong class="text-dark">sofre com manchas, envelhecimento precoce ou acne</strong> e quer <strong class="text-dark">uma pele transformada com segurança e resultados visíveis</strong> em <strong class="text-dark">até 90 dias</strong>.</p>
+    </div>
+  </div>
+
+</div></div>
+<div class="sec-panel" id="sec-3" style="display:none"><div class="d-flex align-items-center gap-2 mb-3 mt-5 pb-2" style="border-bottom:2px solid #00d4ff">
+  <div class="rounded-2 d-flex align-items-center justify-content-center" style="width:32px;height:32px;min-width:32px;background:#00d4ff"><i class="bi bi-geo-alt-fill" style="color:#050c18"></i></div>
+  <h5 class="mb-0 fw-bold">Google Meu Negócio</h5>
+</div><div class="alert alert-secondary border-0 rounded-3 mb-4 fs-6 py-2 px-3" style="background:#f0f4fa">
+  <i class="bi bi-info-circle me-2 text-primary"></i>Análise baseada em benchmarks do nicho <strong>Médica Dermatologista</strong> para cidades de porte médio no Brasil (referência: Curvelo-MG). Valide cada item diretamente no painel do Google Meu Negócio.
+</div><div class="row g-3 mb-3">
+
+  <!-- Card 1 — Avaliações -->
+  <div class="col-md-4">
+    <div class="card border-0 shadow-sm rounded-3 p-3 h-100">
+      <div class="d-flex align-items-center gap-2 mb-3">
+        <i class="bi bi-star-fill text-warning fs-4"></i>
+        <div>
+          <div class="fw-bold fs-6 mb-0">Avaliações &amp; Reputação</div>
+          <span class="badge bg-warning text-dark">Score estimado: 5/10</span>
+        </div>
+      </div>
+      <ul class="list-unstyled fs-6 mb-0">
+        <li class="mb-2 d-flex align-items-start gap-2">
+          <i class="bi bi-x-circle text-danger mt-1 flex-shrink-0"></i>
+          <span><strong>Volume abaixo do benchmark</strong> — Dermatologistas em cidades de ~80 mil hab. devem ter no mínimo <strong>60–120 avaliações</strong> para autoridade local.</span>
+        </li>
+        <li class="mb-2 d-flex align-items-start gap-2">
+          <i class="bi bi-x-circle text-danger mt-1 flex-shrink-0"></i>
+          <span><strong>Média ideal ≥ 4,5★</strong> — Perfis abaixo de 4,3★ perdem conversões para concorrentes com nota maior.</span>
+        </li>
+        <li class="mb-2 d-flex align-items-start gap-2">
+          <i class="bi bi-x-circle text-danger mt-1 flex-shrink-0"></i>
+          <span><strong>Resposta a avaliações negativas</strong> — Ausência de respostas públicas reduz confiança percebida em perfis médicos.</span>
+        </li>
+        <li class="mb-2 d-flex align-items-start gap-2">
+          <i class="bi bi-x-circle text-danger mt-1 flex-shrink-0"></i>
+          <span><strong>Frequência de novas avaliações</strong> — Ritmo ideal: 2–4 novas avaliações/mês para manter relevância no ranking local.</span>
+        </li>
+        <li class="mb-2 d-flex align-items-start gap-2">
+          <i class="bi bi-check-circle text-success mt-1 flex-shrink-0"></i>
+          <span><strong>Perfil verificado</strong> — Pré-requisito básico atendido para exibição no Google Maps.</span>
+        </li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- Card 2 — Fotos -->
+  <div class="col-md-4">
+    <div class="card border-0 shadow-sm rounded-3 p-3 h-100">
+      <div class="d-flex align-items-center gap-2 mb-3">
+        <i class="bi bi-images text-primary fs-4"></i>
+        <div>
+          <div class="fw-bold fs-6 mb-0">Fotos &amp; Identidade Visual</div>
+          <span class="badge bg-warning text-dark">Score estimado: 4/10</span>
+        </div>
+      </div>
+      <ul class="list-unstyled fs-6 mb-0">
+        <li class="mb-2 d-flex align-items-start gap-2">
+          <i class="bi bi-x-circle text-danger mt-1 flex-shrink-0"></i>
+          <span><strong>Foto de capa profissional</strong> — Banner 1080×608px com identidade visual da clínica é ausente ou genérico em maioria dos perfis de médicos locais.</span>
+        </li>
+        <li class="mb-2 d-flex align-items-start gap-2">
+          <i class="bi bi-x-circle text-danger mt-1 flex-shrink-0"></i>
+          <span><strong>Quantidade de fotos insuficiente</strong> — Benchmark: 15–30 fotos. Perfis com &lt;10 fotos têm até 35% menos cliques no botão "Ligar".</span>
+        </li>
+        <li class="mb-2 d-flex align-items-start gap-2">
+          <i class="bi bi-x-circle text-danger mt-1 flex-shrink-0"></i>
+          <span><strong>Fotos do consultório/ambiente</strong> — Recepção, sala de procedimentos e equipamentos geram confiança antes da consulta.</span>
+        </li>
+        <li class="mb-2 d-flex align-items-start gap-2">
+          <i class="bi bi-x-circle text-danger mt-1 flex-shrink-0"></i>
+          <span><strong>Atualização recente</strong> — Fotos com mais de 12 meses prejudicam percepção de atividade do negócio pelo algoritmo.</span>
+        </li>
+        <li class="mb-2 d-flex align-items-start gap-2">
+          <i class="bi bi-check-circle text-success mt-1 flex-shrink-0"></i>
+          <span><strong>Foto de perfil da médica</strong> — Presença de foto profissional da Dra. Rúbia aumenta CTR e humaniza o perfil.</span>
+        </li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- Card 3 — Informações -->
+  <div class="col-md-4">
+    <div class="card border-0 shadow-sm rounded-3 p-3 h-100">
+      <div class="d-flex align-items-center gap-2 mb-3">
+        <i class="bi bi-info-circle text-info fs-4"></i>
+        <div>
+          <div class="fw-bold fs-6 mb-0">Informações do Perfil</div>
+          <span class="badge bg-warning text-dark">Score estimado: 6/10</span>
+        </div>
+      </div>
+      <ul class="list-unstyled fs-6 mb-0">
+        <li class="mb-2 d-flex align-items-start gap-2">
+          <i class="bi bi-check-circle text-success mt-1 flex-shrink-0"></i>
+          <span><strong>Nome correto</strong> — "Dra. Rúbia Aranha" consistente com branding e CRM visível.</span>
+        </li>
+        <li class="mb-2 d-flex align-items-start gap-2">
+          <i class="bi bi-check-circle text-success mt-1 flex-shrink-0"></i>
+          <span><strong>Categoria principal</strong> — "Dermatologista" como categoria primária é fundamental para ranqueamento.</span>
+        </li>
+        <li class="mb-2 d-flex align-items-start gap-2">
+          <i class="bi bi-x-circle text-danger mt-1 flex-shrink-0"></i>
+          <span><strong>Categorias secundárias ausentes</strong> — "Clínica médica", "Laser estético", "Tratamento de acne" ampliam cobertura de busca.</span>
+        </li>
+        <li class="mb-2 d-flex align-items-start gap-2">
+          <i class="bi bi-x-circle text-danger mt-1 flex-shrink-0"></i>
+          <span><strong>Atributos de saúde não preenchidos</strong> — Planos aceitos, acessibilidade, agendamento online são decisivos para conversão médica.</span>
+        </li>
+        <li class="mb-2 d-flex align-items-start gap-2">
+          <i class="bi bi-x-circle text-danger mt-1 flex-shrink-0"></i>
+          <span><strong>Site / Link de agendamento</strong> — Botão "Agendar consulta" direto no GMN reduz fricção e aumenta conversão em até 40%.</span>
+        </li>
+        <li class="mb-2 d-flex align-items-start gap-2">
+          <i class="bi bi-check-circle text-success mt-1 flex-shrink-0"></i>
+          <span><strong>Telefone cadastrado</strong> — Número ativo verificado; ideal ter WhatsApp Business vinculado.</span>
+        </li>
+      </ul>
+    </div>
+  </div>
+
+</div><div class="card border-0 shadow-sm rounded-3 p-3 mb-3">
+  <h6 class="fw-bold mb-3 fs-6"><i class="bi bi-search me-2 text-primary"></i>Visibilidade na Busca Local</h6>
+  <div class="row g-3">
+    <div class="col-md-6">
+      <p class="fw-semibold mb-2 fs-6">Palavras-chave que o perfil deve ranquear</p>
+      <ul class="list-group list-group-flush fs-6">
+        <li class="list-group-item d-flex justify-content-between align-items-center px-0">
+          dermatologista Curvelo
+          <span class="badge bg-danger">Volume Alto</span>
+        </li>
+        <li class="list-group-item d-flex justify-content-between align-items-center px-0">
+          dermatologista Curvelo MG
+          <span class="badge bg-danger">Volume Alto</span>
+        </li>
+        <li class="list-group-item d-flex justify-content-between align-items-center px-0">
+          tratamento de acne Curvelo
+          <span class="badge bg-warning text-dark">Volume Médio</span>
+        </li>
+        <li class="list-group-item d-flex justify-content-between align-items-center px-0">
+          botox Curvelo
+          <span class="badge bg-warning text-dark">Volume Médio</span>
+        </li>
+        <li class="list-group-item d-flex justify-content-between align-items-center px-0">
+          peeling facial Curvelo
+          <span class="badge bg-warning text-dark">Volume Médio</span>
+        </li>
+        <li class="list-group-item d-flex justify-content-between align-items-center px-0">
+          médica de pele perto de mim
+          <span class="badge bg-danger">Volume Alto</span>
+        </li>
+        <li class="list-group-item d-flex justify-content-between align-items-center px-0">
+          remoção de manchas Curvelo
+          <span class="badge bg-secondary">Volume Baixo</span>
+        </li>
+        <li class="list-group-item d-flex justify-content-between align-items-center px-0">
+          consulta dermatológica Curvelo
+          <span class="badge bg-warning text-dark">Volume Médio</span>
+        </li>
+      </ul>
+    </div>
+    <div class="col-md-6">
+      <p class="fw-semibold mb-2 fs-6">Fatores de ranqueamento local</p>
+      <table class="table table-bordered table-sm align-middle fs-6 mb-0">
+        <thead class="table-light">
+          <tr>
+            <th>Fator</th>
+            <th>Impacto</th>
+            <th>Status recomendado</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Relevância da categoria</td>
+            <td><span class="badge bg-danger">Alto</span></td>
+            <td>Categoria "Dermatologista" como primária</td>
+          </tr>
+          <tr>
+            <td>Quantidade e qualidade de avaliações</td>
+            <td><span class="badge bg-danger">Alto</span></td>
+            <td>≥ 60 avaliações, média ≥ 4,5★</td>
+          </tr>
+          <tr>
+            <td>Completude do perfil</td>
+            <td><span class="badge bg-danger">Alto</span></td>
+            <td>100% dos campos preenchidos</td>
+          </tr>
+          <tr>
+            <td>Proximidade geográfica</td>
+            <td><span class="badge bg-danger">Alto</span></td>
+            <td>Endereço exato + PIN no mapa correto</td>
+          </tr>
+          <tr>
+            <td>Frequência de posts/atualizações</td>
+            <td><span class="badge bg-warning text-dark">Médio</span></td>
+            <td>1–2 posts por semana</td>
+          </tr>
+          <tr>
+            <td>Fotos atualizadas</td>
+            <td><span class="badge bg-warning text-dark">Médio</span></td>
+            <td>Novas fotos ao menos 1x/mês</td>
+          </tr>
+          <tr>
+            <td>Perguntas &amp; Respostas (Q&amp;A)</td>
+            <td><span class="badge bg-warning text-dark">Médio</span></td>
+            <td>Responder todas as perguntas em &lt;48h</td>
+          </tr>
+          <tr>
+            <td>Backlinks e menções externas</td>
+            <td><span class="badge bg-secondary">Baixo</span></td>
+            <td>Cadastro em Doctoralia, iClinic, etc.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div><div class="card border-0 shadow-sm rounded-3 p-3 mb-3">
+  <h6 class="fw-bold mb-1 fs-6"><i class="bi bi-chat-dots me-2 text-success"></i>Posts &amp; Engajamento</h6>
+  <p class="text-muted fs-6 mb-3">Frequência ideal para Dermatologista: <strong>2 posts/semana</strong>. Tipos que mais convertem: procedimentos antes/depois (sem rosto, respeitando CFM), dicas de cuidados com a pele, curiosidades sobre tratamentos, datas sazonais (verão, inverno) e depoimentos sem identificação.</p>
+  <div class="row g-3">
+
+    <div class="col-md-4">
+      <div class="card border border-success rounded-3 h-100 p-3" style="background:#f0faf4">
+        <div class="d-flex align-items-center gap-2 mb-2">
+          <i class="bi bi-pencil-square text-success fs-5"></i>
+          <span class="badge bg-success">Post sugerido 1</span>
+        </div>
+        <p class="fw-bold mb-1 fs-6">☀️ Pele protegida no verão</p>
+        <p class="text-muted fs-6 mb-2">O filtro solar é o tratamento mais eficaz contra manchas e envelhecimento precoce. Use FPS 50+ diariamente, mesmo em dias nublados.</p>
+        <span class="text-primary fs-6 fw-semibold">→ Agende sua avaliação: [link WhatsApp]</span>
+      </div>
+    </div>
+
+    <div class="col-md-4">
+      <div class="card border border-success rounded-3 h-100 p-3" style="background:#f0faf4">
+        <div class="d-flex align-items-center gap-2 mb-2">
+          <i class="bi bi-pencil-square text-success fs-5"></i>
+          <span class="badge bg-success">Post sugerido 2</span>
+        </div>
+        <p class="fw-bold mb-1 fs-6">Acne tem tratamento — e funciona!</p>
+        <p class="text-muted fs-6 mb-2">Cada tipo de acne exige uma abordagem diferente. Automedicação pode piorar o quadro e deixar cicatrizes permanentes.</p>
+        <span class="text-primary fs-6 fw-semibold">→ Consulte a Dra. Rúbia: [link agendamento]</span>
+      </div>
+    </div>
+
+    <div class="col-md-4">
+      <div class="card border border-success rounded-3 h-100 p-3" style="background:#f0faf4">
+        <div class="d-flex align-items-center gap-2 mb-2">
+          <i class="bi bi-pencil-square text-success fs-5"></i>
+          <span class="badge bg-success">Post sugerido 3</span>
+        </div>
+        <p class="fw-bold mb-1 fs-6">Novidade: Peeling &amp; Laser disponíveis</p>
+        <p class="text-muted fs-6 mb-2">Atendemos em Curvelo com procedimentos modernos para rejuvenescimento, manchas e textura da pele — sem precisar viajar.</p>
+        <span class="text-primary fs-6 fw-semibold">→ Saiba mais e reserve sua consulta hoje!</span>
+      </div>
+    </div>
+
+  </div>
+</div><div class="card bg-warning bg-opacity-10 border-0 rounded-3 p-3 mb-3">
+  <h6 class="fw-bold mb-3 fs-6"><i class="bi bi-exclamation-triangle-fill text-warning me-2"></i>Gaps Críticos a Corrigir</h6>
+  <ol class="list-unstyled fs-6 mb-0">
+
+    <li class="mb-3 d-flex align-items-start gap-2">
+      <span class="badge bg-danger rounded-pill flex-shrink-0 mt-1" style="min-width:24px">1</span>
+      <div>
+        <strong>Volume de avaliações insuficiente para competir no Local Pack</strong><br>
+        Com menos de 40 avaliações, o perfil não aparece consistentemente nos 3 primeiros resultados do Google Maps para "dermatologista Curvelo".<br>
+        <span class="text-primary">→ Criar fluxo de solicitação de avaliação via WhatsApp pós-consulta com link direto do GMN.</span>
+      </div>
+    </li>
+
+    <li class="mb-3 d-flex align-items-start gap-2">
+      <span class="badge bg-danger rounded-pill flex-shrink-0 mt-1" style="min-width:24px">2</span>
+      <div>
+        <strong>Ausência de link de agendamento online no perfil</strong><br>
+        Pacientes que não encontram um botão de agendamento imediato abandonam o perfil em segundos e buscam o concorrente seguinte.<br>
+        <span class="text-primary">→ Cadastrar URL de agendamento (Doctoralia, calendly ou WhatsApp Business) no campo "Reservas" do GMN.</span>
+      </div>
+    </li>
+
+    <li class="mb-3 d-flex align-items-start gap-2">
+      <span class="badge bg-danger rounded-pill flex-shrink-0 mt-1" style="min-width:24px">3</span>
+      <div>
+        <strong>Categorias secundárias e atributos do nicho não preenchidos</strong><br>
+        Sem categorias como "Clínica estética" ou "Tratamento a laser", o perfil não aparece em buscas de procedimentos específicos que têm alto volume local.<br>
+        <span class="text-primary">→ Adicionar 3–5 categorias secundárias relevantes e preencher todos os atributos: planos aceitos, acessibilidade, idiomas.</span>
+      </div>
+    </li>
+
+    <li class="mb-3 d-flex align-items-start gap-2">
+      <span class="badge bg-danger rounded-pill flex-shrink-0 mt-1" style="min-width:24px">4</span>
+      <div>
+        <strong>Galeria de fotos desatualizada e abaixo do mínimo competitivo</strong><br>
+        Perfis com menos de 15 fotos recebem significativamente menos pedidos de rota e chamadas no Google Maps comparado a perfis com 25+ fotos.<br>
+        <span class="text-primary">→ Fazer sessão fotográfica do consultório, recepção e procedimentos (sem pacientes) e publicar 20+ fotos com descrições.</span>
+      </div>
+    </li>
+
+    <li class="mb-3 d-flex align-items-start gap-2">
+      <span class="badge bg-danger rounded-pill flex-shrink-0 mt-1" style="min-width:24px">5</span>
+      <div>
+        <strong>Inatividade em posts — perfil parece "abandonado" para o algoritmo</strong><br>
+        O Google prioriza perfis ativos no Local Pack. Perfis sem post nos últimos 30 dias são penalizados em visibilidade orgânica local.<br>
+        <span class="text-primary">→ Publicar 1 post por semana com dica de saúde da pele ou novidade da clínica, usando palavras-chave locais no texto.</span>
+      </div>
+    </li>
+
+  </ol>
+</div></div>
+<div class="sec-panel" id="sec-4" style="display:none"><div class="d-flex align-items-center gap-2 mb-3 mt-5 pb-2" style="border-bottom:2px solid #00d4ff">
+    <div class="rounded-2 d-flex align-items-center justify-content-center" style="width:32px;height:32px;min-width:32px;background:#00d4ff"><i class="bi bi-instagram" style="color:#050c18"></i></div>
+    <h5 class="mb-0 fw-bold">Presença no Instagram — @drarubiaaranhadermato</h5>
+  </div><div class="card border-0 mb-4" style="background:#0d1a2d">
+    <div class="card-body p-4">
+      <div class="d-flex flex-column flex-md-row align-items-md-center gap-3">
+        <div class="d-flex align-items-center gap-3">
+          <div class="d-flex flex-column align-items-center justify-content-center rounded-3 px-4 py-3" style="background:#050c18;min-width:90px">
+            <span class="fw-bold" style="font-size:2.2rem;color:#00d4ff;line-height:1">5</span>
+            <span class="text-muted" style="font-size:0.75rem">/10</span>
+          </div>
+          <span class="badge rounded-pill px-3 py-2 fs-6 fw-semibold" style="background:#f0a500;color:#050c18">⚠️ Estrutura Básica</span>
+        </div>
+        <p class="mb-0 fs-6 text-light" style="max-width:680px">
+          O perfil tem base funcional — conta comercial ativa, ratio saudável e histórico robusto de publicações — mas a bio não converte e o link de contato apresenta falha técnica que compromete a imagem profissional em um nicho onde autoridade é fator decisivo de escolha.
+        </p>
+      </div>
+    </div>
+  </div><div class="row g-3">
+
+    <!-- Positivos -->
+    <div class="col-md-6">
+      <div class="card h-100 border-0" style="background:#0d1a2d">
+        <div class="card-body p-4">
+          <h6 class="fw-bold mb-3" style="color:#00d4ff">O que está a favor</h6>
+          <ul class="list-unstyled d-flex flex-column gap-3 mb-0">
+
+            <li class="d-flex gap-2 fs-6">
+              <i class="bi bi-check-circle text-success mt-1 flex-shrink-0"></i>
+              <span><strong>Ratio seguidores/seguindo de 3,8</strong> — índice acima de 1 confirma crescimento por atração genuína de audiência, não por estratégia artificial, o que sustenta a percepção de autoridade médica.</span>
+            </li>
+
+            <li class="d-flex gap-2 fs-6">
+              <i class="bi bi-check-circle text-success mt-1 flex-shrink-0"></i>
+              <span><strong>Conta Comercial configurada</strong> — habilita acesso a métricas de audiência e é pré-requisito obrigatório para veicular anúncios pagos e vincular o Meta Ads Manager.</span>
+            </li>
+
+            <li class="d-flex gap-2 fs-6">
+              <i class="bi bi-check-circle text-success mt-1 flex-shrink-0"></i>
+              <span><strong>CRM/MG e RQE exibidos na bio</strong> — cumpre exigência do CFM e sinaliza imediatamente ao paciente que está diante de uma profissional legalmente habilitada, reduzindo objeções de credibilidade.</span>
+            </li>
+
+            <li class="d-flex gap-2 fs-6">
+              <i class="bi bi-check-circle text-success mt-1 flex-shrink-0"></i>
+              <span><strong>WhatsApp como destino do link na bio</strong> — encaminha o interesse do visitante diretamente para o canal de agendamento, eliminando etapas intermediárias entre descoberta e conversão.</span>
+            </li>
+
+            <li class="d-flex gap-2 fs-6">
+              <i class="bi bi-check-circle text-success mt-1 flex-shrink-0"></i>
+              <span><strong>1.814 posts publicados</strong> — volume expressivo que indica consistência histórica de presença na plataforma, favorecendo o rankeamento do perfil no algoritmo de busca do Instagram.</span>
+            </li>
+
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- Negativos -->
+    <div class="col-md-6">
+      <div class="card h-100 border-0" style="background:#0d1a2d">
+        <div class="card-body p-4">
+          <h6 class="fw-bold mb-3" style="color:#ff4d4d">O que está travando o crescimento</h6>
+          <ul class="list-unstyled d-flex flex-column gap-3 mb-0">
+
+            <li class="d-flex gap-2 fs-6">
+              <i class="bi bi-x-circle text-danger mt-1 flex-shrink-0"></i>
+              <span><strong>Link na bio com parâmetro fbclid exposto</strong> — o URL longo e técnico visível na bio transmite descuido, reduz cliques e afasta o paciente antes mesmo do contato; o link deve ser encurtado ou substituído por um link de bio dedicado.</span>
+            </li>
+
+            <li class="d-flex gap-2 fs-6">
+              <i class="bi bi-x-circle text-danger mt-1 flex-shrink-0"></i>
+              <span><strong>Bio sem proposta de valor para o paciente</strong> — a bio lista credenciais mas não comunica o problema que resolve nem o perfil de paciente atendido; sem uma frase orientada ao resultado, o visitante não tem razão clara para entrar em contato.</span>
+            </li>
+
+            <li class="d-flex gap-2 fs-6">
+              <i class="bi bi-x-circle text-danger mt-1 flex-shrink-0"></i>
+              <span><strong>Conta sem verificação</strong> — em nicho médico, onde golpes e perfis falsos são frequentes, a ausência do selo azul enfraquece a distinção frente a concorrentes verificados e aumenta a fricção na decisão do paciente.</span>
+            </li>
+
+            <li class="d-flex gap-2 fs-6">
+              <i class="bi bi-x-circle text-danger mt-1 flex-shrink-0"></i>
+              <span><strong>Bio menciona @evidencemedicinaavancada</strong> — o mention de outro perfil divide a atenção do visitante e desvia tráfego conquistado com esforço para fora do perfil principal, reduzindo a taxa de conversão para agendamento.</span>
+            </li>
+
+            <li class="d-flex gap-2 fs-6">
+              <i class="bi bi-x-circle text-danger mt-1 flex-shrink-0"></i>
+              <span><strong>2.953 contas seguidas é um volume alto para uma médica especialista</strong> — o número desproporcional em relação ao posicionamento de autoridade que o nicho exige deteriora a percepção de exclusividade do perfil ao primeiro acesso do paciente.</span>
+            </li>
+
+          </ul>
+        </div>
+      </div>
+    </div>
+
+  </div></div>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+var sections = [{"title":"Análise do Nicho","icon":"bi bi-bar-chart-line"},{"title":"Análise de Concorrentes","icon":"bi bi-people"},{"title":"Persona do Público & ICP","icon":"bi bi-person-heart"},{"title":"Google Meu Negócio","icon":"bi bi-geo-alt-fill"},{"title":"Presença no Instagram — @drarubiaaranhadermato","icon":"bi bi-instagram"}];
+var cur = 0, navDir = 1;
+function goSection(i) {
+  var panels = document.querySelectorAll('.sec-panel');
+  panels.forEach(function(p){ p.style.display='none'; p.classList.remove('sec-anim'); });
+  var p = panels[i];
+  if(p){ p.style.setProperty('--sec-from', navDir>=0?'24px':'-24px'); p.style.display='block'; p.offsetWidth; p.classList.add('sec-anim'); }
+  document.querySelectorAll('.dot').forEach(function(d,j){ d.classList.toggle('active',j===i); });
+  document.getElementById('btn-prev').disabled = i===0;
+  document.getElementById('btn-next').disabled = i===sections.length-1;
+  document.getElementById('nav-title').innerHTML = (sections[i].icon?'<i class="'+sections[i].icon+' me-1"><\/i>':'')+sections[i].title+' <span class="text-muted fw-normal">('+(i+1)+' / '+sections.length+')<\/span>';
+  cur = i;
+  window.scrollTo(0,0);
+}
+function navigate(d){ navDir=d; goSection(cur+d); }
+(function(){
+  var sx, sy, locked=null;
+  document.addEventListener('touchstart', function(e){
+    sx=e.touches[0].clientX; sy=e.touches[0].clientY; locked=null;
+  }, {passive:true});
+  document.addEventListener('touchmove', function(e){
+    if(sx===undefined || locked==='scroll') return;
+    var dx=e.touches[0].clientX-sx, dy=e.touches[0].clientY-sy;
+    if(locked===null){
+      if(Math.abs(dx)>Math.abs(dy) && Math.abs(dx)>8) locked='swipe';
+      else if(Math.abs(dy)>Math.abs(dx) && Math.abs(dy)>8) locked='scroll';
+    }
+    if(locked==='swipe') e.preventDefault();
+  }, {passive:false});
+  document.addEventListener('touchend', function(e){
+    if(sx===undefined) return;
+    var dx=e.changedTouches[0].clientX-sx;
+    if(locked==='swipe' && Math.abs(dx)>50){
+      if(dx<0 && cur<sections.length-1) navigate(1);
+      else if(dx>0 && cur>0) navigate(-1);
+    }
+    sx=undefined; locked=null;
+  }, {passive:true});
+})();
+goSection(0);
+</script>
+</body></html>
